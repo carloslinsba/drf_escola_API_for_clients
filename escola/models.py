@@ -1,6 +1,21 @@
 from django.db import models
-
 from django.db import models
+from datetime import datetime
+
+def path_and_rename():
+    def wrapper(instance, filename):
+        ext = filename.split('.')[-1]
+        # get filename
+        if instance.pk:
+            time_now = datetime.now()
+            filename = '{}.{}'.format(str( instance.pk) +'_'+ str(time_now) , ext)
+        else:
+            # set filename as timestamp string
+            filename = '{}.{}'.format(str(time_now), ext)
+        # return the whole path to the file
+        return filename
+    return wrapper
+
 
 class Aluno(models.Model):
     nome = models.CharField(max_length=30)
@@ -8,7 +23,7 @@ class Aluno(models.Model):
     cpf = models.CharField(max_length=11)
     data_nascimento = models.DateField()
     celular = models.CharField(max_length=11, default="")
-    foto = models.ImageField(blank = True)
+    foto = models.ImageField(blank = True, upload_to = path_and_rename() )
 
     def __str__(self):
         return self.nome
