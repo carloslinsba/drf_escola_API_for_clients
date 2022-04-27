@@ -6,8 +6,8 @@ def path_and_rename():
     def wrapper(instance, filename):
         ext = filename.split('.')[-1]
         # get filename
+        time_now = datetime.now()
         if instance.pk:
-            time_now = datetime.now()
             filename = '{}.{}'.format(str( instance.pk) +'_'+ str(time_now) , ext)
         else:
             # set filename as timestamp string
