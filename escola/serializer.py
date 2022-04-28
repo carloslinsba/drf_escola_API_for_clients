@@ -2,11 +2,13 @@ from rest_framework import serializers
 from escola.models import Aluno, Curso, Matricula
 
 class AlunoSerializer(serializers.ModelSerializer):
+    """Aluno class seralizer - without 'celular' field. Version 01 for the API """
     class Meta:
         model = Aluno
         fields = ['id', 'nome', 'rg', 'cpf', 'data_nascimento', 'foto']
 
 class AlunoSerializer_v2(serializers.ModelSerializer):
+    """  Aluno class seralizer - with 'celular' field.  """
     class Meta:
         model = Aluno
         fields = ['id', 'nome', 'rg', 'cpf', 'data_nascimento', 'celular','foto']
