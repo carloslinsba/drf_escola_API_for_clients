@@ -1,9 +1,6 @@
-from urllib import response
 from rest_framework import viewsets, generics
-from escola import serializer
 from escola.models import Aluno, Curso, Matricula
 from escola.serializer import AlunoSerializer, AlunoSerializer_v2, CursoSerializer, MatriculaSerializer, ListaMatriculasAlunoSerializer, ListaAlunosMatriculadosSerializer
-from rest_framework.authentication import BasicAuthentication
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -11,10 +8,8 @@ class AlunosViewSet(viewsets.ModelViewSet):
     """Exibindo todos os alunos e alunas"""
     queryset = Aluno.objects.all()
     
-    
-    
-
     def get_serializer_class(self):
+        """"responsible for API versioning"""
         if self.request.version == 'v2':
             return AlunoSerializer_v2
         else:
@@ -27,6 +22,7 @@ class CursosViewSet(viewsets.ModelViewSet):
     serializer_class = CursoSerializer
 
     def create(self, request):
+        """ insert location in the API response. """
         serializer = self.serializer_class(data = request.data)
         if serializer.is_valid():
             serializer.save()
@@ -38,7 +34,7 @@ class CursosViewSet(viewsets.ModelViewSet):
     
 
 class MatriculaViewSet(viewsets.ModelViewSet):
-    """Listando todas as matrículas"""
+    """Listando as matrículas"""
     queryset = Matricula.objects.all()
     serializer_class = MatriculaSerializer
     http_method_names = ['get', 'post']
