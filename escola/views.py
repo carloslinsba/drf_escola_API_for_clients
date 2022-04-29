@@ -24,7 +24,7 @@ class CursosViewSet(viewsets.ModelViewSet):
     serializer_class = CursoSerializer
 
     def create(self, request):
-        """ insert location in the API response. """
+        """ insert location at   API response. """
         serializer = self.serializer_class(data = request.data)
         if serializer.is_valid():
             serializer.save()
